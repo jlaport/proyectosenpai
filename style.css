@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
 }
+
 body {
   padding: 10px;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
@@ -116,12 +117,13 @@ main {
   display: block;
 }
 
-#categorias {
+#categories {
   width: 100px;
   background-color: steelblue;
   color: white;
 }
-#categorias:hover {
+
+#categories:hover {
   color: steelblue;
   background-color: white;
 }
@@ -135,7 +137,7 @@ main {
   justify-content: space-between;
 }
 
-#buybutton{
+#buybutton {
   float: right;
 }
 
@@ -150,7 +152,8 @@ main {
   border: none;
   margin-top: 5px;
 }
-.button[disabled]{
+
+.button[disabled] {
   background-color: gray;
 }
 

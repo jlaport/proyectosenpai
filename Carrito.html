@@ -20,6 +20,7 @@
         <a href="principal.html">
           <li class="nav-item">Inicio</li>
         </a>
+
         <li class="nav-item">Carrito</li>
       </ul>
     </header>
@@ -86,17 +87,16 @@
         document.getElementById("total").innerHTML = total;
       }
 
-      updateTotal()
-
+      updateTotal();
       function updateCart(event, id) {
         cart[id.toString()] = event.target.value;
-        updateTotal() 
+        updateTotal();
       }
-      
-      function buy(){
-        let button = document.getElementById("buybutton")
-        button.innerHTML = "Gracias por elegirnos"
-        button.disabled = true
+
+      function buy() {
+        let button = document.getElementById("buybutton");
+        button.innerHTML = "Gracias por elegirnos";
+        button.disabled = true;
       }
     </script>
   </body>

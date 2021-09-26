@@ -32,7 +32,7 @@
       <div class="top">
         <h1>Productos</h1>
 
-        <select onchange="filterProducts()" name="" id="categorias">
+        <select onchange="filterProducts()" name="" id="categories">
           <option value="todos">Todos</option>
           <option value="juguetes">Juguetes</option>
           <option value="mordillos">Mordillos</option>
@@ -91,7 +91,7 @@
       document.getElementById("products").innerHTML = html;
 
       function filterProducts() {
-        let value = document.getElementById("categorias").value;
+        let value = document.getElementById("categories").value;
         const products = document.getElementsByClassName("products")[0];
         for (let i = 0; i < products.children.length; i++) {
           let product = products.children[i];
@@ -108,7 +108,6 @@
       function addToCart(id) {
         cart[id] = cart[id] ? cart[id] + 1 : 1;
         localStorage.setItem("cart", JSON.stringify(cart));
-
         document.getElementById("carttotal").innerHTML = Object.values(
           cart
         ).reduce((a, b) => a + b, 0);
