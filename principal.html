@@ -4,9 +4,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>littlestory</title>
     <link rel="stylesheet" href="style.css" />
     <script src="https://unpkg.com/feather-icons"></script>
+    <script src="products.js"></script>
   </head>
 
   <body>
@@ -16,27 +17,29 @@
       </a>
 
       <ul>
-        <li class="nav-item">
-          Inicio
-        </li>
+        <li class="nav-item">Inicio</li>
 
-        <li class="nav-item" >
-          <a href="">Carrito</a>
+        <li class="nav-item">
+          <a href="./Carrito.html"
+            >Carrito
+            <span id="carttotal"></span>
+          </a>
         </li>
       </ul>
     </header>
 
     <main>
-      <div>
+      <div class="top">
         <h1>Productos</h1>
 
         <select onchange="filterProducts()" name="" id="categorias">
+          <option value="todos">Todos</option>
           <option value="juguetes">Juguetes</option>
           <option value="mordillos">Mordillos</option>
           <option value="baberos">Baberos</option>
           <option value="muselinas">Muselinas</option>
           <option value="portachupetes">Portachupetes</option>
-          <option value="chupetes">Chupetes</option>
+          <option value="chuprtes">Chupetes</option>
           <option value="vasos">Vasos</option>
           <option value="rebozos">Rebozos</option>
           <option value="platos">Platos</option>
@@ -44,70 +47,7 @@
       </div>
 
       <div>
-        <ul class="products">
-          <li class="juguetes">
-            <img src="./assets/Juguetes/estrella.jpeg" alt="" />
-            <h3>Babero</h3>
-            <span> $50 </span>
-            <button>Añadir al Carrito</button>
-          </li>
-
-          <li class="mordillos">
-            <img src="./assets/Mordillos/Aros.jpg" alt="" />
-            <h3>Mordillo</h3>
-            <span> $50 </span>
-            <button>Añadir al Carrito</button>
-          </li>
-
-          <li class="platos">
-            <img src="./assets/Platos/altoazul.jpg" alt="" />
-            <h3>Plato</h3>
-            <span> $50 </span>
-            <button>Añadir al Carrito</button>
-          </li>
-
-          <li class="baberos">
-            <img src="./assets/Baberos/baberoamarillo.jpg" alt="" />
-            <h3>Babero</h3>
-            <span> $50 </span>
-            <button>Añadir al Carrito</button>
-          </li>
-
-          <li>
-            <img src="./assets/Baberos/baberoamarillo.jpg" alt="" />
-            <h3>Babero</h3>
-            <span> $50 </span>
-            <button>Añadir al Carrito</button>
-          </li>
-
-          <li>
-            <img src="./assets/Baberos/baberoamarillo.jpg" alt="" />
-            <h3>Babero</h3>
-            <span> $50 </span>
-            <button>Añadir al Carrito</button>
-          </li>
-
-          <li>
-            <img src="./assets/Baberos/baberoamarillo.jpg" alt="" />
-            <h3>Babero</h3>
-            <span> $50 </span>
-            <button>Añadir al Carrito</button>
-          </li>
-
-          <li>
-            <img src="./assets/Baberos/baberoamarillo.jpg" alt="" />
-            <h3>Babero</h3>
-            <span> $50 </span>
-            <button>Añadir al Carrito</button>
-          </li>
-
-          <li>
-            <img src="./assets/Baberos/baberoamarillo.jpg" alt="" />
-            <h3>Babero</h3>
-            <span> $50 </span>
-            <button>Añadir al Carrito</button>
-          </li>
-        </ul>
+        <ul id="products" class="products"></ul>
       </div>
     </main>
 
@@ -115,7 +55,7 @@
       <nav>
         <div>Jorge Laport</div>
 
-        <div>Contacto 099111222</div>
+        <div>Contacto 099209593</div>
 
         <a href="https://www.instagram.com/littlestory.uy/">
           <i data-feather="instagram"></i>
@@ -129,20 +69,49 @@
 
     <script>
       feather.replace();
+
+      let html = "";
+
+      products.forEach((product) => {
+        html += `<li id="${product.id}" class="${product.category}">
+          <div class="img">  
+            <img src="${product.image}" alt="${product.name}"/>
+          </div>
+
+          <div class="data">
+            <div class="description">
+              <span>${product.name}</span>
+              <span class="precio"> $${product.price} </span>
+            </div>
+            <button id="addtocart" class="button" onClick="addToCart(${product.id})">Añadir al Carrito</button>
+          </div>
+          </li>`;
+      });
+
+      document.getElementById("products").innerHTML = html;
+
       function filterProducts() {
         let value = document.getElementById("categorias").value;
-
         const products = document.getElementsByClassName("products")[0];
         for (let i = 0; i < products.children.length; i++) {
           let product = products.children[i];
-          console.log(products.children[i].classList.contains(value));
-        if(product.classList.contains(value)){
-          product.classList.remove("hidden")
-        }else{
-          product.classList.add("hidden")
+          if (value == "todos" || product.classList.contains(value)) {
+            product.classList.remove("hidden");
+          } else {
+            product.classList.add("hidden");
+          }
         }
-        }
+      }
 
+      let cart = {};
+
+      function addToCart(id) {
+        cart[id] = cart[id] ? cart[id] + 1 : 1;
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        document.getElementById("carttotal").innerHTML = Object.values(
+          cart
+        ).reduce((a, b) => a + b, 0);
       }
     </script>
   </body>

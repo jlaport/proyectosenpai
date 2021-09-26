@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>littlestoryCarrito</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="products.js"></script>
+    <style></style>
+  </head>
+  <body>
+    <header>
+      <a>
+        <img src="./assets/logo.jpg" alt="logo empresa" />
+      </a>
+
+      <ul>
+        <a href="principal.html">
+          <li class="nav-item">Inicio</li>
+        </a>
+        <li class="nav-item">Carrito</li>
+      </ul>
+    </header>
+
+    <main>
+      <div>
+        <div>
+          <ul id="products" class="cart"></ul>
+        </div>
+      </div>
+
+      <div class="total">
+        <span>Total </span>
+        <span id="total"></span>
+      </div>
+
+      <button id="buybutton" class="button" onclick="buy()">Comprar</button>
+    </main>
+
+    <footer>
+      <nav>
+        <div>Jorge Laport</div>
+
+        <div>Contacto 099209593</div>
+
+        <a href="https://www.instagram.com/littlestory.uy/">
+          <i data-feather="instagram"></i>
+        </a>
+
+        <a href="https://www.facebook.com/LittleStoryuy-101180458373507">
+          <i data-feather="facebook"></i>
+        </a>
+      </nav>
+    </footer>
+
+    <script>
+      feather.replace();
+
+      let cart = JSON.parse(localStorage.getItem("cart"));
+      let html = "";
+      let cartIds = Object.keys(cart);
+      let cartProducts = products.filter((product) => {
+        return cartIds.includes(product.id.toString());
+      });
+
+      cartProducts.forEach((product) => {
+        html += `<li>
+            <img src="${product.image}" alt="${product.name}"/>
+            <span>${product.name}</span>
+            <span class="precio"> $${product.price} </span>
+            <input class="amount" onchange="updateCart(event, ${
+              product.id
+            })" type="number" min="0" value="${cart[product.id.toString()]}">
+          </li>`;
+      });
+
+      document.getElementById("products").innerHTML = html;
+
+      function updateTotal() {
+        let total = 0;
+        cartProducts.forEach((product) => {
+          total = total + product.price * cart[product.id.toString()];
+        });
+        document.getElementById("total").innerHTML = total;
+      }
+
+      updateTotal()
+
+      function updateCart(event, id) {
+        cart[id.toString()] = event.target.value;
+        updateTotal() 
+      }
+      
+      function buy(){
+        let button = document.getElementById("buybutton")
+        button.innerHTML = "Gracias por elegirnos"
+        button.disabled = true
+      }
+    </script>
+  </body>
+</html>
